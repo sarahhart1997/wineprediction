@@ -1,7 +1,7 @@
-FROM openjdk:8
+FROM openjdk:11-jre-slim
 
 WORKDIR /app
 
-COPY target/your-spark-app.jar /app/your-spark-app.jar
+COPY target/wineproj-1.0-SNAPSHOT.jar /app/
 
-CMD ["java", "-jar", "your-spark-app.jar"]
+CMD ["java", "-cp", "/app/wineproj-1.0-SNAPSHOT.jar", "njit.sarah.wineproject.WineQualityTraining"]

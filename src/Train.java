@@ -37,7 +37,7 @@ public class WineQualityTraining {
         Dataset<Row> dataset = spark.read().format("csv").schema(csvSchema)
                 .option("header", "true").option("delimiter", ";").option("quote", "\"")
                 .option("ignoreLeadingWhiteSpace", true).option("ignoreTrailingWhiteSpace", true)
-                .load("file:///home/ec2-user/WineQualityPrediction/TrainingDataset.csv");
+                .load("Add training dataset link here appropriately after researching");
 
         for (String columnName : dataset.columns()) {
             dataset = dataset.withColumn(columnName, functions.trim(col(columnName)));
@@ -45,7 +45,7 @@ public class WineQualityTraining {
 
         dataset = dataset.withColumn("quality", when(col("quality").gt(7), 1).otherwise(0));
 
-        // Feature vector preparation
+        // Prepare properly
         String[] featureCols = dataset.columns();
         featureCols = Arrays.copyOfRange(featureCols, 0, featureCols.length - 1);
         VectorAssembler vectorAssembler = new VectorAssembler()
@@ -53,7 +53,7 @@ public class WineQualityTraining {
                 .setOutputCol("features");
         dataset = vectorAssembler.transform(dataset);
 
-        // Splitting the dataset
+        // Split the dataset
         Dataset<Row>[] splits = dataset.randomSplit(new double[]{0.8, 0.2});
         Dataset<Row> trainData = splits[0];
         Dataset<Row> testData = splits[1];
@@ -79,6 +79,6 @@ public class WineQualityTraining {
         System.out.println("Evaluated F1 Score: " + f1Metric);
 
         // Saving the model
-        trainedModel.write().overwrite().save("file:///home/ec2-user/WineQualityPrediction/qualitytrainingforwine");
+        trainedModel.write().overwrite().save("Figure out what connection link to put here..... not sure");
     }
 }

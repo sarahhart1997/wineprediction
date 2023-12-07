@@ -21,10 +21,10 @@ import static spark.Spark.*;
 public class WineQualityPrediction {
 
     public static void main(String[] args) {
-        SparkSession spark = SparkSession.builder().appName("QualityInferenceForWine").getOrCreate();
+        SparkSession spark = SparkSession.builder().appName("QualityTestForWine").getOrCreate();
 
         // Load the RandomForestClassificationModel
-        PipelineModel rfModel = PipelineModel.load("/src/qualitytrainingforwine");
+        PipelineModel rfModel = PipelineModel.load("/src/QualityTrainingForWine");
 
         // Define schema for incoming CSV data
         StructType dataSchema = new StructType()
@@ -58,7 +58,7 @@ public class WineQualityPrediction {
                 .option("header", "true").option("delimiter", ";").load(filePath);
         validationDataset = validationDataset.withColumn("quality", when(col("quality").gt(7), 1).otherwise(0));
 
-        // Feature vectorization
+        // Vectorization
         VectorAssembler featuresAssembler = new VectorAssembler()
                 .setInputCols(validationDataset.columns())
                 .setOutputCol("features");
